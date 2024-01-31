@@ -13,6 +13,6 @@ THE SOFTWARE.
 """
 
 """
-This file is intended to organize question output from parse.py into files
-matching categories. This REQUIRES user input.
+This file is intended to organize question output_file from parse.py into files
+matching categories. This REQUIRES user input_file.
 """

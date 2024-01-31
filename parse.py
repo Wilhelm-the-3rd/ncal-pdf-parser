@@ -1,3 +1,12 @@
+import os
+import fitz
+
+"""
+This file is intended to parse PDF files containing NCAL questions into a format.
+These questions are outputted into the file question.txt. organize.py is intended
+to be used to organize the questions into separate question files for category.
+"""
+
 """
 All Rights Reserved
 
@@ -12,20 +21,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 
-"""
-This file is intended to parse PDF files containing NCAL questions into a format. 
-These questions are outputted into the file question.txt. organize.py is intended
-to be used to organize the questions into separate question files for category.
-"""
-
-import os, textract
 
 def file_exists(file_path: str) -> bool:
     """
         @return     True if file exists, False otherwise
         @rtype      bool
     """
-    return os.path(file_path).exists
+    return os.path.exists(file_path)
+
 
 def write(file_path: str, new_line: str) -> None:
     """
@@ -36,24 +39,24 @@ def write(file_path: str, new_line: str) -> None:
     with open(file_path) as file:
         file.write(new_line + "\n")
 
-def text_from_pdf(file_path: str) -> str:
+
+def text_from_pdf(file_path: str) -> list[str]:
     """
         Extracts text from a pdf file
         @return     Text as a string
         @rtype      str
     """
+    out = []
 
-    return textract.process(input, method='pdftotext')
+    for page in fitz.open(file_path):
+        out.append(page.get_text())
 
-def process_text(text: str, output_path: str) -> None:
+    return out
+
+
+def process_text(pages: list[str], output_path: str) -> None:
     """
         Processes text into question format and outputs to file
         @return     None
     """
-    lines = text.split(text, "\n")
-    questions = {}
-
-    for i in range(0, lines.count, 2):
-        questions[lines[i].strip] = lines[i+1]
-
-    
+    for page in
